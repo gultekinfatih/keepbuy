@@ -1,13 +1,25 @@
-import React from 'react';
-import {Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import * as React from 'react';
+import {View, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+function HomeScreen() {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <View>
-      <Text>Keep Buy</Text>
-      <Icon name="rocket" size={30} color="#900" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
