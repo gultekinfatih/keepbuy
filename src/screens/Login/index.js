@@ -2,8 +2,20 @@ import React from 'react';
 import {Text, View, Image, TextInput, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
-const Login = props => {
+import {connect} from 'react-redux';
+import {createUserWithFB, loginUserWithFB, setApp} from '../../redux/actions';
+
+const mapStateToProps = states => ({app: states.app});
+
+const mapDispatchToProps = dispatch => ({dispatch});
+
+const Login = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(props => {
   const {navigate} = props.navigation;
+  const {dispatch, app} = props;
+
   return (
     <>
       <View
@@ -57,7 +69,12 @@ const Login = props => {
             borderRadius: 23,
             paddingVertical: 2,
           }}>
-          <TextInput placeholder="Email" style={{paddingHorizontal: 10}} />
+          <TextInput
+            placeholder="Email"
+            style={{paddingHorizontal: 10}}
+            value={app.username}
+            onChangeText={d => dispatch(setApp('username', d))}
+          />
         </View>
         <View
           style={{
@@ -71,7 +88,12 @@ const Login = props => {
             borderRadius: 23,
             paddingVertical: 2,
           }}>
-          <TextInput placeholder="password" style={{paddingHorizontal: 10}} />
+          <TextInput
+            placeholder="password"
+            style={{paddingHorizontal: 10}}
+            value={app.password}
+            onChangeText={d => dispatch(setApp('password', d))}
+          />
         </View>
 
         <View
@@ -85,6 +107,7 @@ const Login = props => {
             borderRadius: 23,
           }}>
           <Text
+            onPress={() => dispatch(loginUserWithFB())}
             style={{
               color: 'white',
             }}>
@@ -103,6 +126,6 @@ const Login = props => {
       </View>
     </>
   );
-};
+});
 
 export {Login};
