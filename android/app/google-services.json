@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1060261781192",
+    "firebase_url": "https://keepbuy-221ca-default-rtdb.firebaseio.com",
+    "project_id": "keepbuy-221ca",
+    "storage_bucket": "keepbuy-221ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060261781192:android:606435ba26f758df914ffd",
+        "android_client_info": {
+          "package_name": "com.keepbuy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060261781192-hersfsfssrq3hjip5usjbnhdn4dmcjm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW_8UYmf3BzamkIm2HMaEDRFC-prIANPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060261781192-hersfsfssrq3hjip5usjbnhdn4dmcjm9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
