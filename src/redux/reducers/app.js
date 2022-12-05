@@ -37,6 +37,10 @@ export const app = (state = initialState, actionObj) => {
       };
     }
 
+    case constants.REQUEST_GET_ALL_PRODUCTS: {
+      return {...state, products: actionObj.payload.products};
+    }
+
     default:
       return state;
   }
