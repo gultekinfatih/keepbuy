@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     width: '100%',
-    backgroundColor: '#AF0C6E',
+    backgroundColor: '#9eac00',
+    paddingVertical: 20,
   },
   upperHeader: {
     flexDirection: 'row',
@@ -76,13 +77,6 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     color: '#FFFFFF',
     marginTop: 12,
-  },
-  spaceForHeader: {
-    height: LOWER_HEADER_HEIGHT,
-  },
-  scrollViewContent: {
-    height: 1000,
-    backgroundColor: 'white',
   },
 });
 

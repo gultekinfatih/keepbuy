@@ -1,23 +1,43 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {createStackNavigator} from '@react-navigation/stack';
+
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Tab = createMaterialBottomTabNavigator();
+import {Home, Favorites, Cart, ProductDetail} from '../../screens';
 
-import {Home, Favorites, Cart} from '../../screens';
+const Tab = createMaterialBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const mapDispatchToProps = dispatch => {
   return {dispatch};
 };
 
+const HomeStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ProductDetail"
+        component={ProductDetail}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const MainStack = connect(mapDispatchToProps)(props => {
   return (
-    <Tab.Navigator activeColor="#ff6600" barStyle={{backgroundColor: '#fff'}}>
+    <Tab.Navigator activeColor="#00AC76" barStyle={{backgroundColor: '#fff'}}>
       <Tab.Screen
         name="Products"
-        component={Home}
+        component={HomeStack}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color}) => (

@@ -1,87 +1,34 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
   View,
   SafeAreaView,
   Image,
-  ScrollView,
   StatusBar,
-  Animated,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 
-import {getFeatureViewAnimation} from '../../utils/ui/animation';
+import {connect} from 'react-redux';
+import {logoutUserWithFB} from '../../redux/actions';
 
 import styles from './styles';
 
-const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+const mapStateToProps = states => ({app: states.app});
 
-const Header = () => {
-  const animatedValue = useRef(new Animated.Value(0)).current;
-  const scrollViewRef = useRef(null);
-  const lastOffsetY = useRef(0);
-  const scrollDirection = useRef('');
+const mapDispatchToProps = dispatch => ({dispatch});
 
-  const depositViewAnimation = getFeatureViewAnimation(animatedValue, 36);
-  const withdrawViewAnimation = getFeatureViewAnimation(animatedValue, -16);
-  const qrViewAnimation = getFeatureViewAnimation(animatedValue, -56);
-  const scanViewAnimation = getFeatureViewAnimation(animatedValue, -92);
+const Header = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(props => {
+  const {dispatch} = props;
 
-  const featureIconCircleAnimation = {
-    opacity: animatedValue.interpolate({
-      inputRange: [0, 25],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    }),
-  };
-  const featureNameAnimation = {
-    transform: [
-      {
-        scale: animatedValue.interpolate({
-          inputRange: [0, 30],
-          outputRange: [1, 0],
-          extrapolate: 'clamp',
-        }),
-      },
-    ],
-    opacity: animatedValue.interpolate({
-      inputRange: [0, 30],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    }),
-  };
-  const featureIconAnimation = {
-    opacity: animatedValue.interpolate({
-      inputRange: [0, 50],
-      outputRange: [0, 1],
-      extrapolate: 'clamp',
-    }),
-  };
-
-  const textInputAnimation = {
-    transform: [
-      {
-        scaleX: animatedValue.interpolate({
-          inputRange: [0, 50],
-          outputRange: [1, 0],
-          extrapolate: 'clamp',
-        }),
-      },
-      {
-        translateX: animatedValue.interpolate({
-          inputRange: [0, 25],
-          outputRange: [0, -100],
-          extrapolate: 'clamp',
-        }),
-      },
-    ],
-    opacity: animatedValue.interpolate({
-      inputRange: [0, 25],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    }),
+  const handleLogout = () => {
+    dispatch(logoutUserWithFB());
+    console.log('logouttt');
   };
   return (
-    <View style={styles.container}>
+    <>
       <StatusBar barStyle="light-content" />
 
       <SafeAreaView>
@@ -95,10 +42,10 @@ const Header = () => {
               source={require('../../assets/images/search.png')}
               style={[styles.icon16, {marginLeft: 8}]}
             />
-            <AnimatedTextInput
+            <TextInput
               placeholder="Search..."
               placeholderTextColor="rgba(255, 255, 255, 0.8)"
-              style={[styles.searchInput, textInputAnimation]}
+              style={styles.searchInput}
             />
           </View>
 
@@ -106,51 +53,16 @@ const Header = () => {
             source={require('../../assets/images/bell.png')}
             style={styles.bell}
           />
-          <Image
-            source={require('../../assets/images/avatar.png')}
-            style={styles.avatar}
-          />
-        </View>
-
-        <View style={[styles.lowerHeader]}>
-          <Animated.View style={[styles.feature, depositViewAnimation]}>
-            <Animated.Image
-              source={require('../../assets/images/deposit.png')}
-              style={[styles.featureIcon, featureIconAnimation]}
-            />
-            <Animated.Image
+          <TouchableOpacity onPress={handleLogout}>
+            <Image
               source={require('../../assets/images/deposit-circle.png')}
-              style={[styles.icon32, featureIconCircleAnimation]}
+              style={styles.icon32}
             />
-            <Animated.Text style={[styles.featureName, featureNameAnimation]}>
-              Logout
-            </Animated.Text>
-          </Animated.View>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
-
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        ref={scrollViewRef}
-        onScroll={e => {
-          const offsetY = e.nativeEvent.contentOffset.y;
-          scrollDirection.current =
-            offsetY - lastOffsetY.current > 0 ? 'down' : 'up';
-          lastOffsetY.current = offsetY;
-          animatedValue.setValue(offsetY);
-        }}
-        onScrollEndDrag={() => {
-          scrollViewRef.current?.scrollTo({
-            y: scrollDirection.current === 'down' ? 100 : 0,
-            animated: true,
-          });
-        }}
-        scrollEventThrottle={16}>
-        <View style={styles.spaceForHeader} />
-        <View style={styles.scrollViewContent} />
-      </ScrollView>
-    </View>
+    </>
   );
-};
+});
 
 export {Header};
