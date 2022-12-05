@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {LoginStack} from './stacks/loginStack';
 import {MainStack} from './tabs/mainStack';
 import {connect} from 'react-redux';
+import {AuthStack} from './stacks/authStack';
 
 const Navigation = connect(
   ({app}) => ({app}),
@@ -13,7 +13,7 @@ const Navigation = connect(
   return useMemo(
     () => (
       <NavigationContainer>
-        {props.app.loginStatus ? <MainStack /> : <LoginStack />}
+        {props.app.loginStatus ? <MainStack /> : <AuthStack />}
       </NavigationContainer>
     ),
     [props.app.loginStatus],
