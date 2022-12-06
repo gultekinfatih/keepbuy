@@ -1,5 +1,132 @@
 import {StyleSheet} from 'react-native';
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#FFFFFF',
+    position: 'relative',
+    paddingBottom: '30%',
+  },
+  title: {
+    fontSize: 14,
+    color: '#000000',
+    fontWeight: '400',
+  },
+  secondaryTitle: {
+    fontSize: 20,
+    color: '#000000',
+    fontWeight: '500',
+    letterSpacing: 1,
+    paddingTop: 20,
+    paddingLeft: 16,
+    marginBottom: 10,
+  },
+  checkoutContainer: {
+    position: 'absolute',
+    bottom: 10,
+    height: '8%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkoutButton: {
+    width: '86%',
+    height: '90%',
+    backgroundColor: '#00AC76',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkoutButtonText: {
+    fontSize: 12,
+    fontWeight: '500',
+    letterSpacing: 1,
+    color: '#FFFFFF',
+    textTransform: 'uppercase',
+  },
+  productContainer: {
+    width: '100%',
+    height: 100,
+    marginVertical: 6,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imageContainer: {
+    width: '30%',
+    height: 100,
+    padding: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F3',
+    borderRadius: 10,
+    marginRight: 22,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  productInfo: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'space-around',
+  },
+  productTitle: {
+    fontSize: 14,
+    maxWidth: '100%',
+    color: '#000000',
+    fontWeight: '600',
+    letterSpacing: 1,
+  },
+  priceContainer: {
+    marginTop: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    opacity: 0.6,
+  },
+  productPrice: {
+    fontSize: 14,
+    fontWeight: '400',
+    maxWidth: '85%',
+    marginRight: 4,
+  },
+  productButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  numberOfProducts: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  minusButton: {
+    borderRadius: 100,
+    marginRight: 20,
+    padding: 4,
+    borderWidth: 1,
+    borderColor: '#B9B9B9',
+    opacity: 0.5,
+  },
+  materialIcon: {
+    fontSize: 16,
+    color: '#777777',
+  },
+  plusButton: {
+    borderRadius: 100,
+    marginLeft: 20,
+    padding: 4,
+    borderWidth: 1,
+    borderColor: '#B9B9B9',
+    opacity: 0.5,
+  },
+  deleteIcon: {
+    fontSize: 16,
+    color: '#ffffff',
+    backgroundColor: '#ef4444',
+    padding: 8,
+    borderRadius: 100,
+  },
+});
 
 export default styles;
