@@ -48,11 +48,6 @@ const ProductDetail = ({route, navigation}) => {
       <StatusBar backgroundColor="#F0F0F3" barStyle="dark-content" />
       <ScrollView>
         <View style={styles.scroolView}>
-          <View style={styles.backIconContainer}>
-            <TouchableOpacity onPress={() => navigation.goBack('Home')}>
-              <Entypo name="chevron-left" style={styles.backIcon} />
-            </TouchableOpacity>
-          </View>
           <FlatList
             data={product.images ? product.images : null}
             horizontal

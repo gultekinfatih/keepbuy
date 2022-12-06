@@ -18,20 +18,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 4,
   },
-  backIconContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 16,
-    paddingLeft: 16,
-  },
-  backIcon: {
-    fontSize: 18,
-    color: '#777777',
-    padding: 12,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-  },
   imagesContainer: {
     width: '100%',
     flexDirection: 'row',
