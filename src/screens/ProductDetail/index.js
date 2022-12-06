@@ -127,6 +127,12 @@ const ProductDetail = ({route, navigation}) => {
 
           <View style={styles.priceContainer}>
             <Text style={styles.price}>$ {product.price}.00</Text>
+            <AirbnbRating
+              count={5}
+              defaultRating={product.rating}
+              size={15}
+              showRating={false}
+            />
           </View>
         </View>
       </ScrollView>

@@ -22,6 +22,11 @@ const ProductCard = ({product, navigation}) => {
         <Text style={styles.productName}>{product.title}</Text>
         <View style={styles.price}>
           <Text>$ {product.price}</Text>
+          <AirbnbRating
+            defaultRating={product.rating}
+            size={10}
+            showRating={false}
+          />
         </View>
       </View>
     </TouchableOpacity>

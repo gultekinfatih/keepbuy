@@ -86,7 +86,11 @@ const styles = StyleSheet.create({
     maxHeight: 44,
     marginBottom: 18,
   },
-  priceContainer: {},
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   price: {
     fontSize: 18,
     fontWeight: '500',
