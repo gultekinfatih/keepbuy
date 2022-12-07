@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Animated,
   Dimensions,
@@ -11,22 +11,73 @@ import {
   View,
 } from 'react-native';
 
+import {connect} from 'react-redux';
+
+import {
+  requestAddProductToFirebase,
+  firebaseProductsListener,
+  firebaseFavoritesListener,
+  requestAddFavoriteToFirebase,
+} from '../../redux/actions/app';
+
 import {AirbnbRating} from 'react-native-ratings';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import styles from './styles';
 
-const ProductDetail = ({route, navigation}) => {
-  const {product} = route.params;
+const mapStateToProps = states => ({app: states.app});
+const mapDispatchToProps = dispatch => ({dispatch});
 
-  const [favorite, setFavorite] = useState(false);
+const ProductDetail = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(props => {
+  const {app, dispatch} = props;
+  const {product} = props.route.params;
+
+  const [favorite, setFavorite] = useState(true);
 
   const width = Dimensions.get('window').width;
 
   const scrollX = new Animated.Value(0);
 
   let position = Animated.divide(scrollX, width);
+
+  useEffect(() => {
+    //dispatch(requestGetAllPRoductsFromFirebase());
+    dispatch(firebaseProductsListener());
+    dispatch(firebaseFavoritesListener());
+
+    return () => {
+      if (global.firebaseProductsListenerOff) {
+        global.firebaseProductsListenerOff();
+      }
+      if (global.firebaseFavoritesListenerOff) {
+        global.firebaseFavoritesListenerOff();
+      }
+    };
+  }, []);
+
+  const sendfb = item => {
+    const filteredProducts = app.fbProducts?.filter(
+      p => p.brand === item.brand,
+    );
+    console.log('filteredProducts', filteredProducts);
+    if (filteredProducts?.length > 0) {
+      alert('Item already in cart!!');
+    } else {
+      dispatch(requestAddProductToFirebase(item));
+    }
+  };
+
+  const addFavorite = item => {
+    dispatch(requestAddFavoriteToFirebase(item));
+  };
+
+  const removeFavorite = item => {
+    console.log('REMOVE ITEM =>');
+  };
 
   //product horizontal scroll product card
   const renderProduct = ({item, index}) => {
@@ -92,25 +143,29 @@ const ProductDetail = ({route, navigation}) => {
               height: 40,
             }}>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => sendfb(product)}>
                 <Text style={styles.buttonText}>{'Add to cart'}</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.iconContainer}>
-              <TouchableOpacity
-                style={styles.favoriteIcon}
-                onPress={() => setFavorite(prevState => !prevState)}>
-                {favorite ? (
-                  <Entypo
-                    color="red"
-                    name="heart"
-                    style={styles.favoriteIcon}
-                  />
+              <View>
+                {!favorite ? (
+                  <TouchableOpacity onPress={() => removeFavorite(product)}>
+                    <Entypo name="heart" style={styles.favoriteIcon} />
+                  </TouchableOpacity>
                 ) : (
-                  <Entypo name="heart" style={styles.favoriteIcon} />
+                  <TouchableOpacity onPress={() => addFavorite(product)}>
+                    <Entypo
+                      color="red"
+                      name="heart"
+                      style={styles.favoriteIcon}
+                    />
+                  </TouchableOpacity>
                 )}
-              </TouchableOpacity>
+              </View>
             </View>
           </View>
 
@@ -133,6 +188,6 @@ const ProductDetail = ({route, navigation}) => {
       </ScrollView>
     </View>
   );
-};
+});
 
 export {ProductDetail};

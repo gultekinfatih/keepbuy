@@ -8,6 +8,14 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingBottom: '30%',
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 20,
+    marginBottom: 10,
+    paddingHorizontal: 16,
+  },
   title: {
     fontSize: 14,
     color: '#000000',
@@ -18,9 +26,12 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontWeight: '500',
     letterSpacing: 1,
-    paddingTop: 20,
-    paddingLeft: 16,
-    marginBottom: 10,
+  },
+  removeTitle: {
+    fontSize: 20,
+    color: '#f87171',
+    fontWeight: '500',
+    letterSpacing: 1,
   },
   checkoutContainer: {
     position: 'absolute',

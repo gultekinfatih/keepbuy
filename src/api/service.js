@@ -70,7 +70,7 @@ const processResponse = (endpoint, res, t1, method) => {
     `Request.${method} finish : ` + endpoint.replace(baseurl, ''),
     `[${status}]`,
     `${t2 - t1}ms`,
-    data,
+    // data,
   );
   return {status, success, data};
 };

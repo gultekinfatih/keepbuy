@@ -36,7 +36,7 @@ const Home = connect(
       <View style={styles.spaceForHeader} />
       <View style={styles.cardContainer}>
         <FlatList
-          data={props.app.products.products}
+          data={props.app.products.list}
           renderItem={({item}) => (
             <ProductCard product={item} navigation={props.navigation} />
           )}

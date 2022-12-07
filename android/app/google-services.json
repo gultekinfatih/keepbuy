@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "1060261781192",
-    "firebase_url": "https://keepbuy-221ca-default-rtdb.firebaseio.com",
-    "project_id": "keepbuy-221ca",
-    "storage_bucket": "keepbuy-221ca.appspot.com"
+    "project_number": "734705417694",
+    "project_id": "keepbuy-f743e",
+    "storage_bucket": "keepbuy-f743e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1060261781192:android:606435ba26f758df914ffd",
+        "mobilesdk_app_id": "1:734705417694:android:7e466debf61cc4519ff14f",
         "android_client_info": {
           "package_name": "com.keepbuy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1060261781192-hersfsfssrq3hjip5usjbnhdn4dmcjm9.apps.googleusercontent.com",
+          "client_id": "734705417694-ekmr7u45jscj5qjcjcpcie5oss4881t8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDW_8UYmf3BzamkIm2HMaEDRFC-prIANPE"
+          "current_key": "AIzaSyAyYjegxcpVpkrzLxLdMbWGT8DZFDNUjf8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1060261781192-hersfsfssrq3hjip5usjbnhdn4dmcjm9.apps.googleusercontent.com",
+              "client_id": "734705417694-ekmr7u45jscj5qjcjcpcie5oss4881t8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
