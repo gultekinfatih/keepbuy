@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, TextInput} from 'react-native';
+import {Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
 
 import {connect} from 'react-redux';
 import {loginUserWithFB, setApp} from '../../redux/actions';
@@ -34,6 +34,7 @@ const Login = connect(
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Email"
+            keyboardType="email-address"
             style={styles.input}
             value={app.username}
             onChangeText={d => dispatch(setApp('username', d))}
@@ -49,11 +50,11 @@ const Login = connect(
         </View>
 
         <View style={styles.buttonContainer}>
-          <Text
+          <TouchableOpacity
             onPress={() => dispatch(loginUserWithFB())}
             style={styles.buttonText}>
-            Login
-          </Text>
+            <Text>Login</Text>
+          </TouchableOpacity>
         </View>
         <Text onPress={() => navigate('Register')} style={styles.signupButton}>
           New User

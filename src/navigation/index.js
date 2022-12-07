@@ -10,13 +10,15 @@ const Navigation = connect(
   ({app}) => ({app}),
   undefined,
 )(props => {
+  const {app} = props;
+  const {loginStatus} = app;
   return useMemo(
     () => (
       <NavigationContainer>
-        {props.app.loginStatus ? <MainStack /> : <AuthStack />}
+        {loginStatus ? <MainStack /> : <AuthStack />}
       </NavigationContainer>
     ),
-    [props.app.loginStatus],
+    [loginStatus],
   );
 });
 
