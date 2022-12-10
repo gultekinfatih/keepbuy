@@ -50,6 +50,22 @@ export const loginUserWithFB = payload => async (dispatch, getState) => {
   }
 };
 
+export const logoutUserWithFB = payload => async (dispatch, getState) => {
+  dispatch({type: constants.SET_APP, key: 'loginLoading', value: true});
+
+  const {data, status, success} = await auth.logout();
+
+  dispatch({type: constants.SET_APP, key: 'loginLoading', value: false});
+
+  if (success) {
+    dispatch({
+      type: constants.REQUEST_LOGOUT_USER_WITH_FB,
+      payload: {},
+    });
+  } else {
+  }
+};
+
 export const createUserWithFB = payload => async (dispatch, getState) => {
   //async işlemlerin yapılacağı yer
   const {username, password} = getState().app;
@@ -81,15 +97,25 @@ export const requestAllProducts = payload => async (dispatch, getState) => {
   }
 };
 
+export const requestProductWithId = productId => async (dispatch, getState) => {
+  const {data, success} = await products.getProductWithId(productId);
+
+  if (success) {
+    dispatch({
+      type: constants.REQUEST_GET_PRODUCT_WITH_ID,
+      payload: data,
+    });
+  } else {
+  }
+};
+
 export const requestAddProductToFirebase =
   payload => async (dispatch, getState) => {
     const {userInfo} = getState().app;
-    // console.log('STATEEEEEE', getState().app.fbProducts);
     const {data, success} = await products.addProductToFirebase(
       payload,
       userInfo.user.uid,
     );
-    console.log('requestAddProductToFirebase', data);
     if (success) {
       dispatch({
         type: constants.REQUEST_ADD_PRODUCT_FB,
@@ -99,7 +125,19 @@ export const requestAddProductToFirebase =
     }
   };
 
-export const requestRemoProductFromFirebase =
+export const requestUpdateProductToFirebase =
+  (value, qty) => async dispatch => {
+    const {data, success} = await products.updateProductToFirebase(value, qty);
+    if (success) {
+      dispatch({
+        type: constants.REQUEST_UPDATE_PRODUCT_FB,
+        payload: data,
+      });
+    } else {
+    }
+  };
+
+export const requestRemoveProductFromFirebase =
   (key, value) => async (dispatch, getState) => {
     const {userInfo} = getState().app;
     const {data, success} = await products.removeProductFromFirebase(
@@ -167,12 +205,10 @@ export const firebaseProductsListener =
 export const requestAddFavoriteToFirebase =
   payload => async (dispatch, getState) => {
     const {userInfo} = getState().app;
-    // console.log('STATEEEEEE', getState().app.fbProducts);
     const {data, success} = await favorites.addFavoriteToFirebase(
       payload,
       userInfo.user.uid,
     );
-
     if (success) {
       dispatch({
         type: constants.REQUEST_ADD_FAVORITE_FB,
@@ -183,9 +219,12 @@ export const requestAddFavoriteToFirebase =
   };
 
 export const requestRemoveFavoriteFromFirebase =
-  productId => async (dispatch, getState) => {
+  (key, value) => async (dispatch, getState) => {
+    console.log('requestRemoveFavoriteFromFirebase', key, value);
     const {userInfo} = getState().app;
     const {data, success} = await favorites.removeFavoriteFromFirebase(
+      key,
+      value,
       userInfo.user.uid,
     );
 

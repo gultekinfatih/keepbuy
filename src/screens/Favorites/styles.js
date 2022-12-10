@@ -8,11 +8,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingBottom: '15%',
   },
-  title: {
-    fontSize: 14,
-    color: '#000000',
-    fontWeight: '400',
-  },
   secondaryTitle: {
     fontSize: 20,
     color: '#000000',
@@ -22,23 +17,15 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     marginBottom: 10,
   },
-  checkoutContainer: {
-    position: 'absolute',
-    bottom: 10,
-    height: '8%',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkoutButton: {
-    width: '100%',
-    height: '100%',
+  addToCart: {
+    width: '50%',
+    height: '70%',
     backgroundColor: '#00AC76',
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  checkoutButtonText: {
+  addToCartText: {
     fontSize: 12,
     fontWeight: '500',
     letterSpacing: 1,
@@ -67,10 +54,14 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
   },
-  productInfo: {
+  productInfoContainer: {
     flex: 1,
     height: '100%',
     justifyContent: 'space-around',
+  },
+  productInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   productTitle: {
     fontSize: 14,
@@ -95,30 +86,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  numberOfProducts: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  minusButton: {
-    borderRadius: 100,
-    marginRight: 20,
-    padding: 4,
-    borderWidth: 1,
-    borderColor: '#B9B9B9',
-    opacity: 0.5,
-  },
-  materialIcon: {
-    fontSize: 16,
-    color: '#777777',
-  },
-  plusButton: {
-    borderRadius: 100,
-    marginLeft: 20,
-    padding: 4,
-    borderWidth: 1,
-    borderColor: '#B9B9B9',
-    opacity: 0.5,
   },
   deleteIcon: {
     fontSize: 16,

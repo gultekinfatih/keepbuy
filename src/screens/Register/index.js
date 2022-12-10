@@ -1,9 +1,21 @@
 import React from 'react';
-import {Text, View, Image, TextInput} from 'react-native';
+import {Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
+
+import {connect} from 'react-redux';
+import {createUserWithFB, setApp} from '../../redux/actions';
+
 import styles from './styles';
 
-const Register = props => {
+const mapStateToProps = states => ({app: states.app});
+
+const mapDispatchToProps = dispatch => ({dispatch});
+
+const Register = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(props => {
   const {navigate} = props.navigation;
+  const {dispatch, app} = props;
   return (
     <>
       <View style={styles.platform} />
@@ -23,16 +35,18 @@ const Register = props => {
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Email"
-            placeholderTextColor="#7ECA9C"
+            keyboardType="email-address"
             style={styles.input}
+            value={app.username}
+            onChangeText={d => dispatch(setApp('username', d))}
           />
         </View>
         <View style={styles.inputContainer}>
           <TextInput
-            secureTextEntry
-            placeholder="Password"
-            placeholderTextColor="#7ECA9C"
+            placeholder="password"
             style={styles.input}
+            value={app.password}
+            onChangeText={d => dispatch(setApp('password', d))}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -45,7 +59,9 @@ const Register = props => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Register</Text>
+          <TouchableOpacity onPress={() => dispatch(createUserWithFB())}>
+            <Text style={styles.buttonText}>Signup</Text>
+          </TouchableOpacity>
         </View>
         <Text onPress={() => navigate('Login')} style={styles.login}>
           Login
@@ -53,6 +69,6 @@ const Register = props => {
       </View>
     </>
   );
-};
+});
 
 export {Register};

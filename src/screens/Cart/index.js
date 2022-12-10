@@ -12,12 +12,14 @@ import {connect} from 'react-redux';
 
 import {
   firebaseProductsListener,
-  requestRemoProductFromFirebase,
+  requestRemoveProductFromFirebase,
+  requestUpdateProductToFirebase,
 } from '../../redux/actions/app';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from './styles';
+import {DeleteButton} from '../../components/DeleteButton';
 
 const mapStateToProps = states => ({app: states.app});
 const mapDispatchToProps = dispatch => ({dispatch});
@@ -29,27 +31,26 @@ const Cart = connect(
   const {app, dispatch} = props;
 
   const [total, setTotal] = useState(null);
+  console.log('TOTAL =>', total);
 
   useEffect(() => {
     //dispatch(requestGetAllPRoductsFromFirebase());
     dispatch(firebaseProductsListener());
-
     return () => {
       if (global.firebaseProductsListenerOff) {
         global.firebaseProductsListenerOff();
       }
     };
-  }, []);
+  }, [dispatch]);
 
   //get total price of all items in the cart
-  // const getTotal = productData => {
-  //   let totalPrice = 0;
-  //   for (let index = 0; index < productData.length; index++) {
-  //     let price = productData[index].price;
-  //     totalPrice = totalPrice + price;
-  //   }
-  //   setTotal(total);
-  // };
+  const allPrices = app.cart?.map(item => item.price);
+
+  const getTotal = allPrices?.reduce((accumulator, value) => {
+    return accumulator + value;
+  }, 0);
+
+  console.log('GET TOTAL =>', getTotal);
 
   const checkOut = async () => {
     try {
@@ -64,12 +65,14 @@ const Cart = connect(
 
   const renderProducts = ({item}) => {
     return (
-      <View
-        onPress={() => props.navigation.navigate('ProductDetail', {})}
-        style={styles.productContainer}>
-        <View style={styles.imageContainer}>
+      <View style={styles.productContainer}>
+        <TouchableOpacity
+          style={styles.imageContainer}
+          onPress={() =>
+            props.navigation.navigate('ProductDetail', {productId: item.id})
+          }>
           <Image source={{uri: item.thumbnail}} style={styles.image} />
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.productInfo}>
           <View>
@@ -81,32 +84,45 @@ const Cart = connect(
 
           <View style={styles.productButtons}>
             <View style={styles.numberOfProducts}>
-              <TouchableOpacity style={styles.minusButton}>
+              <TouchableOpacity
+                style={styles.minusButton}
+                onPress={() =>
+                  dispatch(
+                    requestUpdateProductToFirebase(
+                      item.value,
+                      item.quantity - 1,
+                    ),
+                  )
+                }>
                 <MaterialCommunityIcons
                   name="minus"
                   style={styles.materialIcon}
                 />
               </TouchableOpacity>
 
-              <Text>1</Text>
+              <Text>{item.quantity}</Text>
 
-              <TouchableOpacity style={styles.plusButton}>
+              <TouchableOpacity
+                style={styles.plusButton}
+                onPress={() =>
+                  dispatch(
+                    requestUpdateProductToFirebase(
+                      item.value,
+                      item.quantity + 1,
+                    ),
+                  )
+                }>
                 <MaterialCommunityIcons
                   name="plus"
                   style={styles.materialIcon}
                 />
               </TouchableOpacity>
             </View>
-
-            <TouchableOpacity
-              onPress={() =>
-                dispatch(requestRemoProductFromFirebase(item.key, item.value))
-              }>
-              <MaterialCommunityIcons
-                name="delete-outline"
-                style={styles.deleteIcon}
-              />
-            </TouchableOpacity>
+            <DeleteButton
+              handlePress={() =>
+                dispatch(requestRemoveProductFromFirebase(item.key, item.value))
+              }
+            />
           </View>
         </View>
       </View>
@@ -120,7 +136,7 @@ const Cart = connect(
           <Text style={styles.secondaryTitle}>My Cart</Text>
           {app.cart?.length > 0 ? (
             <TouchableOpacity
-              onPress={() => dispatch(requestRemoProductFromFirebase())}>
+              onPress={() => dispatch(requestRemoveProductFromFirebase())}>
               <Text style={styles.removeTitle}>Clear Cart</Text>
             </TouchableOpacity>
           ) : null}
@@ -138,9 +154,7 @@ const Cart = connect(
         <TouchableOpacity
           onPress={() => (total !== 0 ? checkOut() : null)}
           style={styles.checkoutButton}>
-          <Text style={styles.checkoutButtonText}>
-            CHECKOUT (${total + total / 20})
-          </Text>
+          <Text style={styles.checkoutButtonText}>CHECKOUT (${getTotal})</Text>
         </TouchableOpacity>
       </View>
     </View>
