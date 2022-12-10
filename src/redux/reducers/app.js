@@ -2,6 +2,7 @@ import * as constants from '../constants';
 
 const initialState = {
   cart: [],
+  favorites: [],
   username: 'onur@example.com',
   password: '123456',
 
@@ -16,6 +17,8 @@ const initialState = {
     total: 0,
     skip: 0,
   },
+
+  product: {},
 };
 
 export const app = (state = initialState, {type, payload, key, value}) => {
@@ -27,8 +30,6 @@ export const app = (state = initialState, {type, payload, key, value}) => {
     case constants.REQUEST_LOGIN_USER_WITH_FB:
     case constants.REQUEST_CREATE_USER_WITH_FB:
     case constants.REQUEST_LOGIN: {
-      console.log('LOGIN', payload);
-
       return {
         ...state,
         password: undefined,
@@ -38,8 +39,6 @@ export const app = (state = initialState, {type, payload, key, value}) => {
     }
 
     case constants.REQUEST_LOGOUT_USER_WITH_FB: {
-      console.log('logout reducer');
-
       return {
         ...state,
         loginStatus: false,
@@ -58,6 +57,13 @@ export const app = (state = initialState, {type, payload, key, value}) => {
       };
     }
 
+    case constants.REQUEST_GET_PRODUCT_WITH_ID: {
+      return {
+        ...state,
+        product: payload,
+      };
+    }
+
     case constants.REQUEST_GET_PRODUCTS_FB: {
       return {
         ...state,
@@ -72,10 +78,9 @@ export const app = (state = initialState, {type, payload, key, value}) => {
     }
 
     case constants.REQUEST_GET_FAVORITES_FB: {
-      console.log('PAYLOAD', payload);
       return {
         ...state,
-        fbFavorites: payload,
+        favorites: payload,
       };
     }
 

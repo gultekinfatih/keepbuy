@@ -29,6 +29,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 99,
   },
+  favorite: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 99,
+  },
   discountText: {
     fontSize: 10,
     flex: 1,

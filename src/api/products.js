@@ -9,13 +9,18 @@ export const getAllProducts = async () => {
   return responseObj;
 };
 
+export const getProductWithId = async productId => {
+  let responseObj = await get(`${endpoints.products}/${productId}`);
+
+  return responseObj;
+};
+
 export const addProductToFirebase = async (item, uid) => {
   try {
     const ref = database().ref('/products').push();
-    console.log('REF =>', ref);
     const key = ref.key;
-
-    await ref.set(item);
+    const itemWithQty = {...item, quantity: 1};
+    await ref.set(itemWithQty);
 
     // await database().ref(`/user_products/${uid}`).push().set(key);
     const test = database().ref(`/user_products/${uid}`).push();
@@ -24,6 +29,18 @@ export const addProductToFirebase = async (item, uid) => {
     const val = {key: test.key};
 
     return {data: {val}, success: true};
+  } catch (error) {
+    console.error(error);
+  }
+
+  return {data: null, success: false};
+};
+
+export const updateProductToFirebase = async (value, qty) => {
+  try {
+    await database().ref(`/products/${value}`).update({quantity: qty});
+
+    return {data: {}, success: true};
   } catch (error) {
     console.error(error);
   }
@@ -65,8 +82,8 @@ export const getAllPRoductsFromFirebase = async uid => {
       await database().ref(`/user_products/${uid}`).once('value')
     ).val();
 
-    let productKey = Object.keys(keys);
-    let productValue = Object.values(keys);
+    let productKey = keys && Object.keys(keys);
+    let productValue = keys && Object.values(keys);
 
     if (keys !== null) {
       keys = Object.values(keys);

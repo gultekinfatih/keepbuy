@@ -43,9 +43,15 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
   },
-  upperInfo: {
+  upperInfoContainer: {
     paddingHorizontal: 16,
     marginTop: 6,
+  },
+  upperInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 40,
   },
   titleContainer: {
     flexDirection: 'row',
@@ -108,9 +114,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  favoriteIcon: {
-    fontSize: 30,
   },
 });
 

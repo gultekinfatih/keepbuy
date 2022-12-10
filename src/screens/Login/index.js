@@ -50,10 +50,8 @@ const Login = connect(
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => dispatch(loginUserWithFB())}
-            style={styles.buttonText}>
-            <Text>Login</Text>
+          <TouchableOpacity onPress={() => dispatch(loginUserWithFB())}>
+            <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
         </View>
         <Text onPress={() => navigate('Register')} style={styles.signupButton}>

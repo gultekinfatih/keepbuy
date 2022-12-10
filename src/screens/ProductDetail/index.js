@@ -15,16 +15,15 @@ import {connect} from 'react-redux';
 
 import {
   requestAddProductToFirebase,
-  firebaseProductsListener,
-  firebaseFavoritesListener,
   requestAddFavoriteToFirebase,
+  requestProductWithId,
+  firebaseFavoritesListener,
 } from '../../redux/actions/app';
 
 import {AirbnbRating} from 'react-native-ratings';
 
-import Entypo from 'react-native-vector-icons/Entypo';
-
 import styles from './styles';
+import {FavoriteButton} from '../../components/FavoriteButton';
 
 const mapStateToProps = states => ({app: states.app});
 const mapDispatchToProps = dispatch => ({dispatch});
@@ -34,9 +33,7 @@ const ProductDetail = connect(
   mapDispatchToProps,
 )(props => {
   const {app, dispatch} = props;
-  const {product} = props.route.params;
-
-  const [favorite, setFavorite] = useState(true);
+  const {productId} = props.route.params;
 
   const width = Dimensions.get('window').width;
 
@@ -45,38 +42,41 @@ const ProductDetail = connect(
   let position = Animated.divide(scrollX, width);
 
   useEffect(() => {
-    //dispatch(requestGetAllPRoductsFromFirebase());
-    dispatch(firebaseProductsListener());
-    dispatch(firebaseFavoritesListener());
+    dispatch(requestProductWithId(productId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productId]);
 
-    return () => {
-      if (global.firebaseProductsListenerOff) {
-        global.firebaseProductsListenerOff();
-      }
-      if (global.firebaseFavoritesListenerOff) {
-        global.firebaseFavoritesListenerOff();
-      }
-    };
-  }, []);
+  const filteredProducts = app.cart?.filter(p => p.id === productId);
 
   const sendfb = item => {
-    const filteredProducts = app.fbProducts?.filter(
-      p => p.brand === item.brand,
-    );
-    console.log('filteredProducts', filteredProducts);
     if (filteredProducts?.length > 0) {
+      // eslint-disable-next-line no-alert
       alert('Item already in cart!!');
     } else {
       dispatch(requestAddProductToFirebase(item));
     }
   };
 
-  const addFavorite = item => {
-    dispatch(requestAddFavoriteToFirebase(item));
-  };
+  useEffect(() => {
+    //dispatch(requestGetAllPRoductsFromFirebase());
+    dispatch(firebaseFavoritesListener());
 
-  const removeFavorite = item => {
-    console.log('REMOVE ITEM =>');
+    return () => {
+      if (global.firebaseFavoriteenerOff) {
+        global.firebaseFavoriteenerOff();
+      }
+    };
+  }, [dispatch]);
+
+  const filteredFavorites = app.favorites?.filter(p => p.id === productId);
+
+  const addFavorite = item => {
+    if (filteredFavorites?.length > 0) {
+      // eslint-disable-next-line no-alert
+      alert('Item already in favorite!!');
+    } else {
+      dispatch(requestAddFavoriteToFirebase(item));
+    }
   };
 
   //product horizontal scroll product card
@@ -94,13 +94,15 @@ const ProductDetail = connect(
     );
   };
 
-  return (
+  return !app.product ? (
+    <Text>Loading...</Text>
+  ) : (
     <View style={styles.container}>
       <StatusBar backgroundColor="#F0F0F3" barStyle="dark-content" />
       <ScrollView>
         <View style={styles.scroolView}>
           <FlatList
-            data={product.images ? product.images : null}
+            data={app.product.images ? app.product.images : null}
             horizontal
             renderItem={renderProduct}
             showsHorizontalScrollIndicator={false}
@@ -113,8 +115,8 @@ const ProductDetail = connect(
             )}
           />
           <View style={styles.imagesContainer}>
-            {product.images
-              ? product.images.map((data, index) => {
+            {app.product.images
+              ? app.product.images.map((data, index) => {
                   let opacity = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [0.2, 1, 0.2],
@@ -128,58 +130,44 @@ const ProductDetail = connect(
                         {
                           opacity,
                         },
-                      ]}></Animated.View>
+                      ]}
+                    />
                   );
                 })
               : null}
           </View>
         </View>
-        <View style={styles.upperInfo}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              height: 40,
-            }}>
+        <View style={styles.upperInfoContainer}>
+          <View style={styles.upperInfo}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => sendfb(product)}>
+                onPress={() => sendfb(app.product)}>
                 <Text style={styles.buttonText}>{'Add to cart'}</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.iconContainer}>
               <View>
-                {!favorite ? (
-                  <TouchableOpacity onPress={() => removeFavorite(product)}>
-                    <Entypo name="heart" style={styles.favoriteIcon} />
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity onPress={() => addFavorite(product)}>
-                    <Entypo
-                      color="red"
-                      name="heart"
-                      style={styles.favoriteIcon}
-                    />
-                  </TouchableOpacity>
-                )}
+                <FavoriteButton
+                  isFavorited={filteredFavorites?.length > 0 ? true : false}
+                  handlePress={() => addFavorite(app.product)}
+                />
               </View>
             </View>
           </View>
 
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>{product.title}</Text>
+            <Text style={styles.titleText}>{app.product.title}</Text>
           </View>
 
-          <Text style={styles.description}>{product.description}</Text>
+          <Text style={styles.description}>{app.product.description}</Text>
 
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>$ {product.price}.00</Text>
+            <Text style={styles.price}>$ {app.product.price}.00</Text>
             <AirbnbRating
               count={5}
-              defaultRating={product.rating}
+              defaultRating={app.product.rating}
               size={15}
               showRating={false}
             />

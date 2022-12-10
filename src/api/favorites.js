@@ -6,9 +6,13 @@ export const addFavoriteToFirebase = async (item, uid) => {
     const key = ref.key;
 
     await ref.set(item);
-    await database().ref(`/user_favorites/${uid}`).push().set(key);
 
-    return {data: {}, success: true};
+    const test = database().ref(`/user_favorites/${uid}`).push();
+    await test.set(key);
+
+    const val = {key: test.key};
+
+    return {data: {val}, success: true};
   } catch (error) {
     console.error(error);
   }
@@ -16,10 +20,13 @@ export const addFavoriteToFirebase = async (item, uid) => {
   return {data: null, success: false};
 };
 
-export const removeFavoriteFromFirebase = async uid => {
-  console.log('UİD =>', uid);
+export const removeFavoriteFromFirebase = async (key, value, uid) => {
   try {
-    await database().ref(`/user_favorites/${uid}`).remove();
+    const userFavorite = database().ref(`/user_favorites/${uid}/${key}`);
+    await userFavorite.remove();
+
+    const favorites = database().ref(`/favorites/${value}`);
+    await favorites.remove();
 
     return {data: {}, success: true};
   } catch (error) {
@@ -46,6 +53,10 @@ export const getAllFavoritesFromFirebase = async uid => {
     let keys = (
       await database().ref(`/user_favorites/${uid}`).once('value')
     ).val();
+
+    let favoritetKey = keys && Object.keys(keys);
+    let favoritetValue = keys && Object.values(keys);
+
     if (keys !== null) {
       keys = Object.values(keys);
     } else {
@@ -54,7 +65,12 @@ export const getAllFavoritesFromFirebase = async uid => {
     const favorites = [];
 
     for (let i = 0; i < keys?.length; i++) {
-      favorites.push((await getFavoriteFromFirebase(keys[i])).data);
+      let deleteFavorite = (await getFavoriteFromFirebase(keys[i])).data;
+      favorites.push({
+        ...deleteFavorite,
+        key: favoritetKey[i],
+        value: favoritetValue[i],
+      });
     }
 
     return {data: favorites, success: true};
