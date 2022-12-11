@@ -29,12 +29,6 @@ Install NPM packages
 npm install
 ```
 
-Enter your API in `config.js`
-
-```
-const API_KEY = 'ENTER YOUR API';
-```
-
 In the project directory you can run
 
 ```
