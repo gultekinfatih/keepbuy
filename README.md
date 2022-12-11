@@ -20,7 +20,7 @@ https://dummyjson.com/
 If you want to clone the repo
 
 ```
-git@github.com:EmineCaki/keepbuy.git
+https://github.com/gultekinfatih/keepbuy
 ```
 
 Install NPM packages
