@@ -64,6 +64,19 @@ export const removeProductFromFirebase = async (key, value, uid) => {
   return {data: null, success: false};
 };
 
+export const clearCartFromFirebase = async uid => {
+  try {
+    const userProduct = database().ref(`/user_products/${uid}`);
+    await userProduct.remove();
+
+    return {data: {}, success: true};
+  } catch (error) {
+    console.error(error);
+  }
+
+  return {data: null, success: false};
+};
+
 export const getPRoductFromFirebase = async key => {
   try {
     const productsRef = database().ref('/products');

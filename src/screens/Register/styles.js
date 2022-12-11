@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   inputContainer: {
-    flexDirection: 'row',
+    position: 'relative',
     alignItems: 'center',
     marginHorizontal: 55,
     borderWidth: 2,
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingHorizontal: 10,
+    width: '100%',
   },
   buttonContainer: {
     marginHorizontal: 55,
@@ -58,7 +59,11 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   error: {
+    position: 'absolute',
     color: 'red',
+    textAlign: 'center',
+    bottom: '40%',
+    right: 10,
   },
 });
 

@@ -166,6 +166,22 @@ export const requestRemoveProductFromFirebase =
     }
   };
 
+export const requestRemoveCartFromFirebase =
+  () => async (dispatch, getState) => {
+    const {userInfo} = getState().app;
+    const {data, success} = await products.clearCartFromFirebase(
+      userInfo.user.uid,
+    );
+
+    if (success) {
+      dispatch({
+        type: constants.REQUEST_CLEAR_CART_FB,
+        payload: data,
+      });
+    } else {
+    }
+  };
+
 export const requestGetAllPRoductsFromFirebase =
   payload => async (dispatch, getState) => {
     const {userInfo} = getState().app;
@@ -186,7 +202,6 @@ export const requestGetAllPRoductsFromFirebase =
 export const firebaseProductsListener =
   payload => async (dispatch, getState) => {
     const {userInfo} = getState().app;
-    console.log();
 
     const {off, data, success} = await products.firebaseProductsListener(
       userInfo.user.uid,
@@ -232,7 +247,6 @@ export const requestAddFavoriteToFirebase =
 
 export const requestRemoveFavoriteFromFirebase =
   (key, value) => async (dispatch, getState) => {
-    console.log('requestRemoveFavoriteFromFirebase', key, value);
     const {userInfo} = getState().app;
     const {data, success} = await favorites.removeFavoriteFromFirebase(
       key,

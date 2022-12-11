@@ -44,7 +44,6 @@ export const app = (state = initialState, {type, payload, key, value}) => {
     }
 
     case constants.REQUEST_LOGIN_ERROR: {
-      console.log('PAYLOAD =>', payload.error);
       return {
         ...state,
         error: payload.error,

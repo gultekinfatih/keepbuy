@@ -18,6 +18,7 @@ import {
   firebaseProductsListener,
   requestRemoveProductFromFirebase,
   requestUpdateProductToFirebase,
+  requestRemoveCartFromFirebase,
 } from '../../redux/actions/app';
 
 import styles from './styles';
@@ -135,7 +136,7 @@ const Cart = connect(
           <Text style={styles.secondaryTitle}>My Cart</Text>
           {app.cart?.length > 0 ? (
             <TouchableOpacity
-              onPress={() => dispatch(requestRemoveProductFromFirebase())}>
+              onPress={() => dispatch(requestRemoveCartFromFirebase())}>
               <Text style={styles.removeTitle}>Clear Cart</Text>
             </TouchableOpacity>
           ) : null}
