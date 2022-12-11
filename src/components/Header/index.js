@@ -46,6 +46,7 @@ const Header = connect(
               placeholder="Search..."
               placeholderTextColor="rgba(255, 255, 255, 0.8)"
               style={styles.searchInput}
+              onChangeText={props.onSearch}
             />
           </View>
 
