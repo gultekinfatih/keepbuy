@@ -40,7 +40,6 @@ const Home = connect(
   ) : (
     <View style={styles.container}>
       <Header animatedValue={animatedValue} />
-
       <View style={styles.spaceForHeader} />
       <View style={styles.cardContainer}>
         <FlatList

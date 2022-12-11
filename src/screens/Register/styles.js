@@ -7,16 +7,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   container: {
+    flex: 1,
     backgroundColor: '#FFF',
     height: '100%',
   },
   image: {
     width: '100%',
-    height: '33%',
+    height: '43%',
     resizeMode: 'contain',
   },
   header: {
-    fontSize: 30,
+    fontSize: 20,
     alignSelf: 'center',
   },
   text: {
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 55,
     borderWidth: 2,
-    marginTop: 10,
+    marginTop: 15,
     paddingHorizontal: 10,
     borderColor: '#7ECA9C',
     borderRadius: 23,
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingHorizontal: 10,
-    paddingVertical: '1.5%',
   },
   buttonContainer: {
     marginHorizontal: 55,
@@ -55,7 +55,10 @@ const styles = StyleSheet.create({
   login: {
     alignSelf: 'center',
     color: '#2D4059',
-    paddingVertical: 30,
+    paddingVertical: 20,
+  },
+  error: {
+    color: 'red',
   },
 });
 

@@ -57,6 +57,9 @@ const styles = StyleSheet.create({
     color: '#2D4059',
     paddingVertical: 20,
   },
+  error: {
+    color: 'red',
+  },
 });
 
 export default styles;

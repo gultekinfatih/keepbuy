@@ -120,10 +120,10 @@ export const firebaseProductsListener = async (uid, callBack) => {
 
     global.firebaseProductsListenerOff = ref.off;
 
-    return {data: null, success: true};
+    return {data: null, success: true, off: true};
   } catch (error) {
     console.error(error);
   }
 
-  return {data: null, success: false};
+  return {data: null, success: false, off: false};
 };

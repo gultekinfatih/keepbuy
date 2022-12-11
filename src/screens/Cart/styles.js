@@ -116,7 +116,15 @@ const styles = StyleSheet.create({
     marginRight: 20,
     padding: 4,
     borderWidth: 1,
-    borderColor: '#B9B9B9',
+    borderColor: '#555555',
+    opacity: 0.5,
+  },
+  isOne: {
+    borderRadius: 100,
+    marginRight: 20,
+    padding: 4,
+    borderWidth: 1,
+    borderColor: '#999999',
     opacity: 0.5,
   },
   materialIcon: {
@@ -128,7 +136,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     padding: 4,
     borderWidth: 1,
-    borderColor: '#B9B9B9',
+    borderColor: '#555555',
     opacity: 0.5,
   },
   deleteIcon: {

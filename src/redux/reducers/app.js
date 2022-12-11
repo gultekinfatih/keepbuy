@@ -3,13 +3,17 @@ import * as constants from '../constants';
 const initialState = {
   cart: [],
   favorites: [],
-  username: 'onur@example.com',
-  password: '123456',
+  username: '',
+  password: '',
 
   userInfo: {},
 
   loginStatus: false,
   loginLoading: false,
+  error: {
+    message: '',
+    state: false,
+  },
 
   products: {
     list: [],
@@ -35,6 +39,15 @@ export const app = (state = initialState, {type, payload, key, value}) => {
         password: undefined,
         userInfo: payload.userInfo,
         loginStatus: true,
+        error: payload.error,
+      };
+    }
+
+    case constants.REQUEST_LOGIN_ERROR: {
+      console.log('PAYLOAD =>', payload.error);
+      return {
+        ...state,
+        error: payload.error,
       };
     }
 
