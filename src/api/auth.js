@@ -9,8 +9,6 @@ export const login = async (username, password) => {
     JSON.stringify({username, password}),
   );
 
-  //response ile ilgili işlemler
-
   if (responseObj.success) {
     global.token = responseObj.data.token;
   }
@@ -27,10 +25,8 @@ export const createUserWithFB = async (email, password) => {
 
     return {data: response, success: true};
   } catch (error) {
-    console.error('createUserWithFB', error);
+    return {error: error.message, success: false};
   }
-
-  return {data: null, success: false};
 };
 
 export const loginUserWithFB = async (email, password) => {
@@ -38,10 +34,8 @@ export const loginUserWithFB = async (email, password) => {
     const response = await auth().signInWithEmailAndPassword(email, password);
     return {data: response, success: true};
   } catch (error) {
-    console.error(error);
+    return {error: error.message, success: false};
   }
-
-  return {data: null, success: false};
 };
 
 export const logout = async () => {

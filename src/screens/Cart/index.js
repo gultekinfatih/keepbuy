@@ -8,6 +8,10 @@ import {
   FlatList,
 } from 'react-native';
 
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import {DeleteButton} from '../../components/DeleteButton';
+
 import {connect} from 'react-redux';
 
 import {
@@ -16,10 +20,7 @@ import {
   requestUpdateProductToFirebase,
 } from '../../redux/actions/app';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import styles from './styles';
-import {DeleteButton} from '../../components/DeleteButton';
 
 const mapStateToProps = states => ({app: states.app});
 const mapDispatchToProps = dispatch => ({dispatch});
@@ -31,26 +32,21 @@ const Cart = connect(
   const {app, dispatch} = props;
 
   const [total, setTotal] = useState(null);
-  console.log('TOTAL =>', total);
 
   useEffect(() => {
-    //dispatch(requestGetAllPRoductsFromFirebase());
     dispatch(firebaseProductsListener());
     return () => {
       if (global.firebaseProductsListenerOff) {
         global.firebaseProductsListenerOff();
       }
     };
-  }, [dispatch]);
+  }, []);
 
-  //get total price of all items in the cart
-  const allPrices = app.cart?.map(item => item.price);
-
-  const getTotal = allPrices?.reduce((accumulator, value) => {
-    return accumulator + value;
-  }, 0);
-
-  console.log('GET TOTAL =>', getTotal);
+  const getTotal = app.cart
+    ?.map(item => {
+      return item.price * item.quantity;
+    })
+    .reduce((a, b) => a + b, 0);
 
   const checkOut = async () => {
     try {
@@ -85,15 +81,17 @@ const Cart = connect(
           <View style={styles.productButtons}>
             <View style={styles.numberOfProducts}>
               <TouchableOpacity
-                style={styles.minusButton}
-                onPress={() =>
+                style={item.quantity === 1 ? styles.isOne : styles.minusButton}
+                disabled={item.quantity === 1 ? true : false}
+                onPress={() => {
                   dispatch(
                     requestUpdateProductToFirebase(
                       item.value,
                       item.quantity - 1,
                     ),
-                  )
-                }>
+                  );
+                  dispatch(firebaseProductsListener());
+                }}>
                 <MaterialCommunityIcons
                   name="minus"
                   style={styles.materialIcon}
@@ -104,14 +102,15 @@ const Cart = connect(
 
               <TouchableOpacity
                 style={styles.plusButton}
-                onPress={() =>
+                onPress={() => {
                   dispatch(
                     requestUpdateProductToFirebase(
                       item.value,
                       item.quantity + 1,
                     ),
-                  )
-                }>
+                  );
+                  dispatch(firebaseProductsListener());
+                }}>
                 <MaterialCommunityIcons
                   name="plus"
                   style={styles.materialIcon}

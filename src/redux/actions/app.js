@@ -37,17 +37,47 @@ export const loginUserWithFB = payload => async (dispatch, getState) => {
 
   dispatch({type: constants.SET_APP, key: 'loginLoading', value: true});
 
-  const {data, success} = await auth.loginUserWithFB(username, password);
-
-  dispatch({type: constants.SET_APP, key: 'loginLoading', value: false});
+  const {data, success, error} = await auth.loginUserWithFB(username, password);
 
   if (success) {
     dispatch({
       type: constants.REQUEST_CREATE_USER_WITH_FB,
-      payload: {userInfo: data},
+      payload: {userInfo: data, error: {message: '', state: false}},
     });
   } else {
+    dispatch({
+      type: constants.REQUEST_LOGIN_ERROR,
+      payload: {error: {message: error, state: true}},
+    });
   }
+
+  dispatch({type: constants.SET_APP, key: 'loginLoading', value: false});
+};
+
+export const createUserWithFB = payload => async (dispatch, getState) => {
+  //async işlemlerin yapılacağı yer
+  const {username, password} = getState().app;
+
+  dispatch({type: constants.SET_APP, key: 'loginLoading', value: true});
+
+  const {data, success, error} = await auth.createUserWithFB(
+    username,
+    password,
+  );
+
+  if (success) {
+    dispatch({
+      type: constants.REQUEST_CREATE_USER_WITH_FB,
+      payload: {userInfo: data, error: {message: '', state: false}},
+    });
+  } else {
+    dispatch({
+      type: constants.REQUEST_LOGIN_ERROR,
+      payload: {error: {message: error, state: true}},
+    });
+  }
+
+  dispatch({type: constants.SET_APP, key: 'loginLoading', value: false});
 };
 
 export const logoutUserWithFB = payload => async (dispatch, getState) => {
@@ -61,25 +91,6 @@ export const logoutUserWithFB = payload => async (dispatch, getState) => {
     dispatch({
       type: constants.REQUEST_LOGOUT_USER_WITH_FB,
       payload: {},
-    });
-  } else {
-  }
-};
-
-export const createUserWithFB = payload => async (dispatch, getState) => {
-  //async işlemlerin yapılacağı yer
-  const {username, password} = getState().app;
-
-  dispatch({type: constants.SET_APP, key: 'loginLoading', value: true});
-
-  const {data, success} = await auth.createUserWithFB(username, password);
-
-  dispatch({type: constants.SET_APP, key: 'loginLoading', value: false});
-
-  if (success) {
-    dispatch({
-      type: constants.REQUEST_CREATE_USER_WITH_FB,
-      payload: {userInfo: data},
     });
   } else {
   }
@@ -175,6 +186,7 @@ export const requestGetAllPRoductsFromFirebase =
 export const firebaseProductsListener =
   payload => async (dispatch, getState) => {
     const {userInfo} = getState().app;
+    console.log();
 
     const {off, data, success} = await products.firebaseProductsListener(
       userInfo.user.uid,
