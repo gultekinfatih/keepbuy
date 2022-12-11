@@ -58,7 +58,7 @@ const Register = connect(
           source={require('../../assets/images/keepbuy.png')}
           style={styles.image}
         />
-        <Text style={styles.header}>KeepBuy(bye..)</Text>
+        <Text style={styles.header}>KeepBuy</Text>
 
         <Text style={styles.text}>
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
@@ -83,7 +83,7 @@ const Register = connect(
             )}
             name="email"
           />
-          {errors.email && <Text style={styles.error}>This is required.</Text>}
+          {errors.email && <Text style={styles.error}>Email is required.</Text>}
         </View>
         <View style={styles.inputContainer}>
           <Controller
@@ -94,6 +94,7 @@ const Register = connect(
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
                 placeholder="password"
+                secureTextEntry={true}
                 style={styles.input}
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -103,15 +104,15 @@ const Register = connect(
             name="password"
           />
           {errors.password && (
-            <Text style={styles.error}>This is required.</Text>
+            <Text style={styles.error}>Password is required.</Text>
           )}
         </View>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleSubmit(onSubmit)}>
-            <Text style={styles.buttonText}>Signup</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={handleSubmit(onSubmit)}>
+          <Text style={styles.buttonText}>Signup</Text>
+        </TouchableOpacity>
         <Text onPress={() => navigate('Login')} style={styles.login}>
           Login
         </Text>

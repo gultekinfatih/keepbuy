@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import {
   firebaseFavoritesListener,
   requestRemoveFavoriteFromFirebase,
+  requestAddProductToFirebase,
 } from '../../redux/actions/app';
 
 import styles from './styles';
@@ -31,16 +32,27 @@ const Favorites = connect(
     };
   }, [dispatch]);
 
-  console.log('FAVORITES =>', app.favorites);
+  const sendfb = item => {
+    const filteredProducts = app.cart?.filter(p => p.id === item.id);
+
+    if (filteredProducts?.length > 0) {
+      // eslint-disable-next-line no-alert
+      alert('Item already in cart!!');
+    } else {
+      dispatch(requestAddProductToFirebase(item));
+    }
+  };
 
   const renderProducts = ({item}) => {
     return (
-      <View
-        onPress={() => props.navigation.navigate('ProductDetail', {})}
-        style={styles.productContainer}>
-        <View style={styles.imageContainer}>
+      <View style={styles.productContainer}>
+        <TouchableOpacity
+          style={styles.imageContainer}
+          onPress={() =>
+            props.navigation.navigate('ProductDetail', {productId: item.id})
+          }>
           <Image source={{uri: item.thumbnail}} style={styles.image} />
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.productInfoContainer}>
           <View style={styles.productInfo}>
@@ -55,7 +67,9 @@ const Favorites = connect(
           </View>
 
           <View style={styles.productButtons}>
-            <TouchableOpacity style={styles.addToCart}>
+            <TouchableOpacity
+              style={styles.addToCart}
+              onPress={() => sendfb(item)}>
               <Text style={styles.addToCartText}>Add to Cart</Text>
             </TouchableOpacity>
 

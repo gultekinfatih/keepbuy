@@ -57,7 +57,7 @@ const Login = connect(
           source={require('../../assets/images/keepbuy.png')}
           style={styles.image}
         />
-        <Text style={styles.header}>KeepBuy(bye...)</Text>
+        <Text style={styles.header}>KeepBuy</Text>
 
         <Text style={styles.text}>
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
@@ -94,6 +94,7 @@ const Login = connect(
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
                 placeholder="password"
+                secureTextEntry={true}
                 style={styles.input}
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -107,11 +108,11 @@ const Login = connect(
           )}
         </View>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleSubmit(onSubmit)}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={handleSubmit(onSubmit)}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
         <Text onPress={() => navigate('Register')} style={styles.signupButton}>
           New User
         </Text>

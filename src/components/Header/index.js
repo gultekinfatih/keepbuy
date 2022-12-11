@@ -25,7 +25,6 @@ const Header = connect(
 
   const handleLogout = () => {
     dispatch(logoutUserWithFB());
-    console.log('logouttt');
   };
   return (
     <>
