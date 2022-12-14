@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import {
   requestAllProducts,
   firebaseFavoritesListener,
+  firebaseProductsListener,
 } from '../../redux/actions/app';
 
 import styles from './styles.js';
@@ -50,7 +51,6 @@ const Home = connect(
   }, []);
 
   useEffect(() => {
-    //dispatch(requestGetAllPRoductsFromFirebase());
     dispatch(firebaseFavoritesListener());
 
     return () => {
@@ -60,8 +60,18 @@ const Home = connect(
     };
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(firebaseProductsListener());
+    return () => {
+      if (global.firebaseProductsListenerOff) {
+        global.firebaseProductsListenerOff();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return app.loginLoading ? (
-    <View style={{flex: 1}}>
+    <View style={styles.loading}>
       <Text>Loading...</Text>
     </View>
   ) : (

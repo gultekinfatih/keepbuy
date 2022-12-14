@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../utils/color';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
     position: 'relative',
   },
   scroolView: {
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
   images: {
     width: '16%',
     height: 2.4,
-    backgroundColor: '#000000',
+    backgroundColor: Colors.black,
     marginHorizontal: 4,
     borderRadius: 100,
   },
@@ -64,12 +65,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.5,
     marginVertical: 4,
-    color: '#000000',
+    color: Colors.black,
     maxWidth: '84%',
   },
   description: {
     fontSize: 12,
-    color: '#000000',
+    color: Colors.black,
     fontWeight: '400',
     letterSpacing: 1,
     opacity: 0.5,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     maxWidth: '85%',
-    color: '#000000',
+    color: Colors.black,
     marginBottom: 4,
   },
   buttonContainer: {
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#00AC76',
+    backgroundColor: Colors.primary,
     borderRadius: 3,
     justifyContent: 'center',
     alignItems: 'center',
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
     letterSpacing: 1,
-    color: '#FFFFFF',
+    color: Colors.white,
     textTransform: 'uppercase',
   },
   iconContainer: {

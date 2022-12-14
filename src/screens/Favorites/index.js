@@ -3,6 +3,8 @@ import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 
 import {DeleteButton} from '../../components/DeleteButton';
 
+import Toast from 'react-native-toast-message';
+
 import {connect} from 'react-redux';
 import {
   firebaseFavoritesListener,
@@ -22,7 +24,6 @@ const Favorites = connect(
   const {app, dispatch} = props;
 
   useEffect(() => {
-    //dispatch(requestGetAllPRoductsFromFirebase());
     dispatch(firebaseFavoritesListener());
 
     return () => {
@@ -36,8 +37,10 @@ const Favorites = connect(
     const filteredProducts = app.cart?.filter(p => p.id === item.id);
 
     if (filteredProducts?.length > 0) {
-      // eslint-disable-next-line no-alert
-      alert('Item already in cart!!');
+      Toast.show({
+        type: 'error',
+        text1: 'Item already in cart!!',
+      });
     } else {
       dispatch(requestAddProductToFirebase(item));
     }
@@ -92,7 +95,7 @@ const Favorites = connect(
             <Text>There is no product in your favorites</Text>
           }
           renderItem={renderProducts}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.id} ${item.key}`}
           paddingHorizontal={16}
         />
       </View>

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../utils/color';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,7 +12,7 @@ const styles = StyleSheet.create({
     width: '96%',
     height: '85%',
     marginHorizontal: '2%',
-    backgroundColor: '#9eac00',
+    backgroundColor: Colors.secondary,
   },
   subContainer: {
     justifyContent: 'center',
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
   },
   itemView: {
     // marginHorizontal: '10%',
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     height: 30,
     width: '96%',
     marginBottom: 10,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   noResultText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    color: Colors.white,
   },
 });
 

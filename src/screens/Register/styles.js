@@ -1,14 +1,15 @@
 import {StyleSheet} from 'react-native';
 import {Platform} from 'react-native';
+import Colors from '../../utils/color';
 
 const styles = StyleSheet.create({
   platform: {
     height: Platform.OS === 'ios' ? 40 : 20,
-    backgroundColor: '#FFF',
+    backgroundColor: Colors.white,
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: Colors.white,
     height: '100%',
   },
   image: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginTop: 15,
     paddingHorizontal: 10,
-    borderColor: '#7ECA9C',
+    borderColor: Colors.loginBtn,
     borderRadius: 23,
     paddingVertical: 2,
   },
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
-    backgroundColor: '#7ECA9C',
+    backgroundColor: Colors.loginBtn,
     paddingVertical: 10,
     borderRadius: 23,
   },

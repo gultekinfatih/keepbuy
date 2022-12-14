@@ -1,10 +1,11 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../utils/color';
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
     position: 'relative',
     paddingBottom: '30%',
   },
@@ -18,18 +19,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    color: '#000000',
+    color: Colors.black,
     fontWeight: '400',
   },
   secondaryTitle: {
     fontSize: 20,
-    color: '#000000',
+    color: Colors.black,
     fontWeight: '500',
     letterSpacing: 1,
   },
   removeTitle: {
     fontSize: 20,
-    color: '#f87171',
+    color: Colors.tertiary,
     fontWeight: '500',
     letterSpacing: 1,
   },
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   checkoutButton: {
     width: '86%',
     height: '90%',
-    backgroundColor: '#00AC76',
+    backgroundColor: Colors.primary,
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
     letterSpacing: 1,
-    color: '#FFFFFF',
+    color: Colors.white,
     textTransform: 'uppercase',
   },
   productContainer: {
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     padding: 4,
     borderWidth: 1,
-    borderColor: '#555555',
+    borderColor: Colors.qtyIcon,
     opacity: 0.5,
   },
   isOne: {
@@ -136,13 +137,13 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     padding: 4,
     borderWidth: 1,
-    borderColor: '#555555',
+    borderColor: Colors.qtyIcon,
     opacity: 0.5,
   },
   deleteIcon: {
     fontSize: 16,
-    color: '#ffffff',
-    backgroundColor: '#ef4444',
+    color: Colors.white,
+    backgroundColor: Colors.tertiary,
     padding: 8,
     borderRadius: 100,
   },

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {
   View,
   Text,
@@ -41,13 +41,19 @@ const Cart = connect(
         global.firebaseProductsListenerOff();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getTotal = app.cart
-    ?.map(item => {
-      return item.price * item.quantity;
-    })
-    .reduce((a, b) => a + b, 0);
+  // useMemo
+  const getTotal = useMemo(
+    () =>
+      app.cart
+        ?.map(item => {
+          return item.price * item.quantity;
+        })
+        .reduce((currentTotal, price) => currentTotal + price, 0),
+    [app.cart],
+  );
 
   const checkOut = async () => {
     try {
@@ -145,7 +151,7 @@ const Cart = connect(
           data={app.cart}
           ListEmptyComponent={<Text>There is no product in your cart</Text>}
           renderItem={renderProducts}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.id} ${item.key}`}
           paddingHorizontal={16}
         />
       </View>

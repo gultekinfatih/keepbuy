@@ -1,16 +1,17 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../utils/color';
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
     position: 'relative',
     paddingBottom: '15%',
   },
   secondaryTitle: {
     fontSize: 20,
-    color: '#000000',
+    color: Colors.black,
     fontWeight: '500',
     letterSpacing: 1,
     paddingTop: 20,
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   addToCart: {
     width: '50%',
     height: '70%',
-    backgroundColor: '#00AC76',
+    backgroundColor: Colors.primary,
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
     letterSpacing: 1,
-    color: '#FFFFFF',
+    color: Colors.white,
     textTransform: 'uppercase',
   },
   productContainer: {
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   productTitle: {
     fontSize: 14,
     maxWidth: '100%',
-    color: '#000000',
+    color: Colors.black,
     fontWeight: '600',
     letterSpacing: 1,
   },
@@ -89,8 +90,8 @@ const styles = StyleSheet.create({
   },
   deleteIcon: {
     fontSize: 16,
-    color: '#ffffff',
-    backgroundColor: '#ef4444',
+    color: Colors.white,
+    backgroundColor: Colors.tertiary,
     padding: 8,
     borderRadius: 100,
   },
