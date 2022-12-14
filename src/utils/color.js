@@ -9,10 +9,6 @@ const Colors = {
   success: '#008000',
   qtyIcon: '#555555',
   loginBtn: '#7ECA9C',
-  arrowdown: 'rgb(255, 0, 0)',
-  inputColor: '#666666',
-  bioColor: '#bbbbbb',
-  orange: '#FFA500',
 };
 
 export default Colors;

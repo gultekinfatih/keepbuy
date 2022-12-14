@@ -48,6 +48,7 @@ const Home = connect(
 
   useEffect(() => {
     dispatch(requestAllProducts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -58,7 +59,8 @@ const Home = connect(
         global.firebaseFavoriteenerOff();
       }
     };
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     dispatch(firebaseProductsListener());
