@@ -7,6 +7,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Home, Favorites, Cart, ProductDetail} from '../../screens';
+import Colors from '../../utils/color';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -34,7 +35,9 @@ const HomeStack = () => {
 
 const MainStack = connect(mapDispatchToProps)(props => {
   return (
-    <Tab.Navigator activeColor="#00AC76" barStyle={{backgroundColor: '#fff'}}>
+    <Tab.Navigator
+      activeColor={Colors.primary}
+      barStyle={{backgroundColor: Colors.white}}>
       <Tab.Screen
         name="Products"
         component={HomeStack}

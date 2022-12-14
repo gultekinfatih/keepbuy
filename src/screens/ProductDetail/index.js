@@ -11,6 +11,12 @@ import {
   View,
 } from 'react-native';
 
+import {AirbnbRating} from 'react-native-ratings';
+
+import {FavoriteButton} from '../../components/FavoriteButton';
+
+import Toast from 'react-native-toast-message';
+
 import {connect} from 'react-redux';
 
 import {
@@ -20,10 +26,7 @@ import {
   firebaseFavoritesListener,
 } from '../../redux/actions/app';
 
-import {AirbnbRating} from 'react-native-ratings';
-
 import styles from './styles';
-import {FavoriteButton} from '../../components/FavoriteButton';
 
 const mapStateToProps = states => ({app: states.app});
 const mapDispatchToProps = dispatch => ({dispatch});
@@ -50,8 +53,10 @@ const ProductDetail = connect(
 
   const sendfb = item => {
     if (filteredProducts?.length > 0) {
-      // eslint-disable-next-line no-alert
-      alert('Item already in cart!!');
+      Toast.show({
+        type: 'error',
+        text1: 'Item already in cart!!',
+      });
     } else {
       dispatch(requestAddProductToFirebase(item));
     }
@@ -73,7 +78,10 @@ const ProductDetail = connect(
   const addFavorite = item => {
     if (filteredFavorites?.length > 0) {
       // eslint-disable-next-line no-alert
-      alert('Item already in favorite!!');
+      Toast.show({
+        type: 'error',
+        text1: app.error.message,
+      });
     } else {
       dispatch(requestAddFavoriteToFirebase(item));
     }

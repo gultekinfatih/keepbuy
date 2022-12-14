@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../../utils/color';
 
 const styles = StyleSheet.create({
   bsToast: {
-    borderLeftColor: 'green',
+    borderLeftColor: Colors.success,
     height: 100,
   },
   text1Style: {

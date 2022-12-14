@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../utils/color';
 import {H, W} from '../../utils/ui/dimensions';
 
 const styles = StyleSheet.create({
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '16%',
     height: '16%',
-    backgroundColor: '#00AC76',
+    backgroundColor: Colors.primary,
     top: 4,
     left: 4,
     borderRadius: 10,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   discountText: {
     fontSize: 10,
     flex: 1,
-    color: '#ffffff',
+    color: Colors.white,
     fontWeight: 'bold',
     letterSpacing: 1,
   },
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: 12,
-    color: '#000000',
+    color: Colors.black,
     fontWeight: '600',
     marginBottom: 4,
   },
@@ -75,20 +76,11 @@ const styles = StyleSheet.create({
   availableIcon: {
     fontSize: 12,
     marginRight: 6,
-    color: '#00AC76',
-  },
-  notAvailableIcon: {
-    fontSize: 12,
-    marginRight: 6,
-    color: '#C04345',
+    color: Colors.primary,
   },
   availableText: {
     fontSize: 12,
-    color: '#00AC76',
-  },
-  notAvailableText: {
-    fontSize: 12,
-    color: '#C04345',
+    color: Colors.primary,
   },
 });
 

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../utils/color';
 
 const UPPER_HEADER_HEIGHT = 32;
 const UPPER_HEADER_PADDING_TOP = 4;
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     width: '100%',
-    backgroundColor: '#9eac00',
+    backgroundColor: Colors.secondary,
     paddingVertical: 20,
   },
   upperHeader: {
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 12,
     lineHeight: 14,
-    color: '#FFFFFF',
+    color: Colors.white,
     marginTop: 12,
   },
 });
