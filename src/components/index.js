@@ -4,6 +4,7 @@ import {DeleteButton} from './DeleteButton';
 import {FavoriteButton} from './FavoriteButton';
 import {ErrToast, BsToast} from './Toast';
 import {SearchDropDown} from './SearchDropdown';
+import {Loading} from './Loading';
 
 export {Header};
 export {ProductCard};
@@ -12,3 +13,4 @@ export {FavoriteButton};
 export {ErrToast};
 export {BsToast};
 export {SearchDropDown};
+export {Loading};

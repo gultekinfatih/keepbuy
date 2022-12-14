@@ -123,6 +123,8 @@ export const requestProductWithId = productId => async (dispatch, getState) => {
 export const requestAddProductToFirebase =
   payload => async (dispatch, getState) => {
     const {userInfo} = getState().app;
+    dispatch({type: constants.SET_APP, key: 'loginLoading', value: true});
+
     const {data, success} = await products.addProductToFirebase(
       payload,
       userInfo.user.uid,
@@ -134,11 +136,14 @@ export const requestAddProductToFirebase =
       });
     } else {
     }
+
+    dispatch({type: constants.SET_APP, key: 'loginLoading', value: false});
   };
 
 export const requestUpdateProductToFirebase =
   (value, qty) => async dispatch => {
     const {data, success} = await products.updateProductToFirebase(value, qty);
+
     if (success) {
       dispatch({
         type: constants.REQUEST_UPDATE_PRODUCT_FB,
@@ -151,6 +156,9 @@ export const requestUpdateProductToFirebase =
 export const requestRemoveProductFromFirebase =
   (key, value) => async (dispatch, getState) => {
     const {userInfo} = getState().app;
+
+    dispatch({type: constants.SET_APP, key: 'loginLoading', value: true});
+
     const {data, success} = await products.removeProductFromFirebase(
       key,
       value,
@@ -164,6 +172,8 @@ export const requestRemoveProductFromFirebase =
       });
     } else {
     }
+
+    dispatch({type: constants.SET_APP, key: 'loginLoading', value: false});
   };
 
 export const requestRemoveCartFromFirebase =
@@ -232,6 +242,7 @@ export const firebaseProductsListener =
 export const requestAddFavoriteToFirebase =
   payload => async (dispatch, getState) => {
     const {userInfo} = getState().app;
+
     const {data, success} = await favorites.addFavoriteToFirebase(
       payload,
       userInfo.user.uid,
@@ -248,6 +259,9 @@ export const requestAddFavoriteToFirebase =
 export const requestRemoveFavoriteFromFirebase =
   (key, value) => async (dispatch, getState) => {
     const {userInfo} = getState().app;
+
+    dispatch({type: constants.SET_APP, key: 'loginLoading', value: true});
+
     const {data, success} = await favorites.removeFavoriteFromFirebase(
       key,
       value,
@@ -261,6 +275,8 @@ export const requestRemoveFavoriteFromFirebase =
       });
     } else {
     }
+
+    dispatch({type: constants.SET_APP, key: 'loginLoading', value: false});
   };
 
 export const requestGetAllFavoritesFromFirebase =
