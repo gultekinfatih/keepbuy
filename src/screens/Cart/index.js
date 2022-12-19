@@ -1,16 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  ToastAndroid,
-  FlatList,
-} from 'react-native';
+import React, {useEffect, useMemo} from 'react';
+import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
+
+import {Loading} from '../../components';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {DeleteButton} from '../../components/DeleteButton';
+
+import Toast from 'react-native-toast-message';
 
 import {connect} from 'react-redux';
 
@@ -32,8 +29,6 @@ const Cart = connect(
 )(props => {
   const {app, dispatch} = props;
 
-  const [total, setTotal] = useState(null);
-
   useEffect(() => {
     dispatch(firebaseProductsListener());
     return () => {
@@ -41,21 +36,25 @@ const Cart = connect(
         global.firebaseProductsListenerOff();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getTotal = app.cart
-    ?.map(item => {
-      return item.price * item.quantity;
-    })
-    .reduce((a, b) => a + b, 0);
+  // useMemo
+  const getTotal = useMemo(
+    () =>
+      app.cart
+        ?.map(item => {
+          return item.price * item.quantity;
+        })
+        .reduce((currentTotal, price) => currentTotal + price, 0),
+    [app.cart],
+  );
 
-  const checkOut = async () => {
-    try {
-    } catch (error) {
-      return error;
-    }
-
-    ToastAndroid.show('Items will be Deliverd SOON!', ToastAndroid.SHORT);
+  const checkOut = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Items will be Deliverd Soon!!',
+    });
 
     props.navigation.navigate('Home');
   };
@@ -129,7 +128,9 @@ const Cart = connect(
     );
   };
 
-  return (
+  return app.loginLoading ? (
+    <Loading />
+  ) : (
     <View style={styles.container}>
       <View>
         <View style={styles.headerContainer}>
@@ -145,18 +146,22 @@ const Cart = connect(
           data={app.cart}
           ListEmptyComponent={<Text>There is no product in your cart</Text>}
           renderItem={renderProducts}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.id} ${item.key}`}
           paddingHorizontal={16}
         />
       </View>
 
-      <View style={styles.checkoutContainer}>
-        <TouchableOpacity
-          onPress={() => (total !== 0 ? checkOut() : null)}
-          style={styles.checkoutButton}>
-          <Text style={styles.checkoutButtonText}>CHECKOUT (${getTotal})</Text>
-        </TouchableOpacity>
-      </View>
+      {getTotal > 0 ? (
+        <View style={styles.checkoutContainer}>
+          <TouchableOpacity
+            onPress={() => checkOut()}
+            style={styles.checkoutButton}>
+            <Text style={styles.checkoutButtonText}>
+              CHECKOUT (${getTotal})
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
     </View>
   );
 });

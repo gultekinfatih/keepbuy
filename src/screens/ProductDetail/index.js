@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Animated,
   Dimensions,
@@ -11,6 +11,14 @@ import {
   View,
 } from 'react-native';
 
+import {Loading} from '../../components/Loading';
+
+import {AirbnbRating} from 'react-native-ratings';
+
+import {FavoriteButton} from '../../components/FavoriteButton';
+
+import Toast from 'react-native-toast-message';
+
 import {connect} from 'react-redux';
 
 import {
@@ -20,10 +28,7 @@ import {
   firebaseFavoritesListener,
 } from '../../redux/actions/app';
 
-import {AirbnbRating} from 'react-native-ratings';
-
 import styles from './styles';
-import {FavoriteButton} from '../../components/FavoriteButton';
 
 const mapStateToProps = states => ({app: states.app});
 const mapDispatchToProps = dispatch => ({dispatch});
@@ -46,19 +51,20 @@ const ProductDetail = connect(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId]);
 
-  const filteredProducts = app.cart?.filter(p => p.id === productId);
+  // const filteredProducts = app.cart?.filter(p => p.id === productId);
 
   const sendfb = item => {
-    if (filteredProducts?.length > 0) {
-      // eslint-disable-next-line no-alert
-      alert('Item already in cart!!');
+    if (false) {
+      Toast.show({
+        type: 'error',
+        text1: 'Item already in cart!!',
+      });
     } else {
       dispatch(requestAddProductToFirebase(item));
     }
   };
 
   useEffect(() => {
-    //dispatch(requestGetAllPRoductsFromFirebase());
     dispatch(firebaseFavoritesListener());
 
     return () => {
@@ -66,14 +72,18 @@ const ProductDetail = connect(
         global.firebaseFavoriteenerOff();
       }
     };
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filteredFavorites = app.favorites?.filter(p => p.id === productId);
 
   const addFavorite = item => {
     if (filteredFavorites?.length > 0) {
       // eslint-disable-next-line no-alert
-      alert('Item already in favorite!!');
+      Toast.show({
+        type: 'error',
+        text1: 'Item already in favorites!!',
+      });
     } else {
       dispatch(requestAddFavoriteToFirebase(item));
     }
@@ -95,7 +105,7 @@ const ProductDetail = connect(
   };
 
   return !app.product ? (
-    <Text>Loading...</Text>
+    <Loading />
   ) : (
     <View style={styles.container}>
       <StatusBar backgroundColor="#F0F0F3" barStyle="dark-content" />

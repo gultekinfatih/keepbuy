@@ -5,7 +5,10 @@ import {FavoriteButton} from '../index';
 
 import {AirbnbRating} from 'react-native-ratings';
 
+import Toast from 'react-native-toast-message';
+
 import {connect} from 'react-redux';
+
 import {requestAddFavoriteToFirebase} from '../../redux/actions';
 
 import styles from './styles';
@@ -22,7 +25,10 @@ const ProductCard = connect(mapDispatchToProps)(props => {
   const addFavorite = item => {
     if (filteredFavorites?.length > 0) {
       // eslint-disable-next-line no-alert
-      alert('Item already in favorite!!');
+      Toast.show({
+        type: 'error',
+        text1: 'Item already in favorites!!',
+      });
     } else {
       dispatch(requestAddFavoriteToFirebase(item));
     }

@@ -1,7 +1,11 @@
 import React, {useEffect} from 'react';
 import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 
+import {Loading} from '../../components';
+
 import {DeleteButton} from '../../components/DeleteButton';
+
+import Toast from 'react-native-toast-message';
 
 import {connect} from 'react-redux';
 import {
@@ -22,7 +26,6 @@ const Favorites = connect(
   const {app, dispatch} = props;
 
   useEffect(() => {
-    //dispatch(requestGetAllPRoductsFromFirebase());
     dispatch(firebaseFavoritesListener());
 
     return () => {
@@ -30,14 +33,17 @@ const Favorites = connect(
         global.firebaseFavoriteenerOff();
       }
     };
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const sendfb = item => {
     const filteredProducts = app.cart?.filter(p => p.id === item.id);
 
     if (filteredProducts?.length > 0) {
-      // eslint-disable-next-line no-alert
-      alert('Item already in cart!!');
+      Toast.show({
+        type: 'error',
+        text1: 'Item already in cart!!',
+      });
     } else {
       dispatch(requestAddProductToFirebase(item));
     }
@@ -82,7 +88,9 @@ const Favorites = connect(
     );
   };
 
-  return (
+  return app.loginLoading ? (
+    <Loading />
+  ) : (
     <View style={styles.container}>
       <View>
         <Text style={styles.secondaryTitle}>Favorites</Text>
@@ -92,7 +100,7 @@ const Favorites = connect(
             <Text>There is no product in your favorites</Text>
           }
           renderItem={renderProducts}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.id} ${item.key}`}
           paddingHorizontal={16}
         />
       </View>
